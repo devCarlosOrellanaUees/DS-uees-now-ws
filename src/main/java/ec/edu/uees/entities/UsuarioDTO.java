@@ -11,7 +11,9 @@ import java.io.Serializable;
 @Setter
 @Table(name = "USUARIO")
 public class UsuarioDTO implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private Integer idUsuario;
 

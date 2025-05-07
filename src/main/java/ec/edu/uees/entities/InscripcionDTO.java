@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class InscripcionDTO implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_inscripcion")
     private Integer idInscripcion;
 

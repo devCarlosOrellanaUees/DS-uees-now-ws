@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class EventoDTO implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evento")
     private Integer idEvento;
 
@@ -25,6 +26,7 @@ public class EventoDTO implements Serializable {
     @Column(name = "fecha_fin")
     private LocalDateTime fechaFin;
 
+    @Column(name = "descripción")
     private String descripcion;
 
     @Column(name = "id_categoria")
