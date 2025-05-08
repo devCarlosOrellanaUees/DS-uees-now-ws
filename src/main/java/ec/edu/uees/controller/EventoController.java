@@ -23,4 +23,14 @@ public class EventoController {
     public ResponseEntity<?> getAllEventos(@RequestParam Integer estado) {
         return ResponseEntity.ok(eventoService.getAll(estado));
     }
+
+    @GetMapping("/disponibles/usuario")
+    public ResponseEntity<?> getAllEventosDisponibles(@RequestParam Integer codigoUsuario) {
+        return ResponseEntity.ok(eventoService.getAllDisponibles(codigoUsuario));
+    }
+
+    @GetMapping("/inscritos/usuario")
+    public ResponseEntity<?> getAllEventosInscritos(@RequestParam Integer codigoUsuario) {
+        return ResponseEntity.ok(eventoService.getAllEventosInscrito(codigoUsuario));
+    }
 }

@@ -35,6 +35,8 @@ public class EventoDTO implements Serializable {
     @Column(name = "cantidad_aforo")
     private Integer cantidadAforo;
 
+    private Integer inscritos;
+
     private Integer estado;
     private String banner;
 

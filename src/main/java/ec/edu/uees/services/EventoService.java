@@ -1,6 +1,8 @@
 package ec.edu.uees.services;
 
 import ec.edu.uees.entities.EventoDTO;
+import ec.edu.uees.entities.mapper.EventoEB;
+import ec.edu.uees.repository.EventoEbRepository;
 import ec.edu.uees.repository.EventoRepository;
 import ec.edu.uees.util.ResponseEB;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +19,9 @@ public class EventoService {
 
     @Autowired
     private EventoRepository eventoRepository;
+
+    @Autowired
+    private EventoEbRepository eventoEbRepository;
 
     public ResponseEB saveEvento(EventoDTO evento) {
         try {
@@ -39,6 +44,24 @@ public class EventoService {
         } catch (Exception e) {
             log.error("[ERROR] ----> {}", e.getLocalizedMessage());
             return ResponseEB.builder().status(-1).message("Se podujo un error listar eventos").build();
+        }
+    }
+
+    public ResponseEB getAllDisponibles(int codigoUsuario) {
+        List<EventoEB> eventos = eventoEbRepository.getEventosDisponibles(codigoUsuario);
+        if (eventos != null && !eventos.isEmpty()) {
+            return ResponseEB.builder().status(1).message("Eventos disponibles").data(eventos).build();
+        } else {
+            return ResponseEB.builder().status(-1).message("No tiene eventos disponibles").build();
+        }
+    }
+
+    public ResponseEB getAllEventosInscrito(int codigoUsuario) {
+        List<EventoEB> eventos = eventoEbRepository.getEventosInscritos(codigoUsuario);
+        if (eventos != null && !eventos.isEmpty()) {
+            return ResponseEB.builder().status(1).message("Eventos inscritos").data(eventos).build();
+        } else {
+            return ResponseEB.builder().status(-1).message("No tiene eventos inscritos").build();
         }
     }
 }
