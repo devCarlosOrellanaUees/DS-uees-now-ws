@@ -26,7 +26,7 @@ public class EventoDTO implements Serializable {
     @Column(name = "fecha_fin")
     private LocalDateTime fechaFin;
 
-    @Column(name = "descripción")
+    @Column(name = "descripcion")
     private String descripcion;
 
     @Column(name = "id_categoria")
