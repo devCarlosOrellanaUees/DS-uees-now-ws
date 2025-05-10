@@ -5,9 +5,7 @@ import ec.edu.uees.services.InscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api/inscripcion")
@@ -19,5 +17,10 @@ public class InscripcionController {
     @PostMapping("/save")
     public ResponseEntity<?> saveEvento(@RequestBody InscripcionDTO inscripcion) {
         return ResponseEntity.ok(inscripcionService.saveInscripcion(inscripcion));
+    }
+
+    @GetMapping("/usuarios/inscritos")
+    public ResponseEntity<?> getAllInscritosByEvento(@RequestParam Integer codigoEvento) {
+        return ResponseEntity.ok(inscripcionService.getAllInscritosByEvento(codigoEvento));
     }
 }

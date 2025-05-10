@@ -2,14 +2,19 @@ package ec.edu.uees.services;
 
 import ec.edu.uees.entities.EventoDTO;
 import ec.edu.uees.entities.InscripcionDTO;
+import ec.edu.uees.entities.mapper.EventosInscritosEB;
+import ec.edu.uees.entities.mapper.InscritosEB;
 import ec.edu.uees.repository.EventoRepository;
 import ec.edu.uees.repository.InscripcionRepository;
+import ec.edu.uees.repository.InscritosEbRepository;
 import ec.edu.uees.util.ResponseEB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class InscripcionService {
@@ -21,6 +26,9 @@ public class InscripcionService {
 
     @Autowired
     private EventoRepository eventoRepository;
+
+    @Autowired
+    private InscritosEbRepository inscritosEbRepository;
 
     @Transactional
     public ResponseEB saveInscripcion(InscripcionDTO inscripcion) {
@@ -35,6 +43,15 @@ public class InscripcionService {
         } catch (Exception e) {
             log.error("[ERROR] ----> {}", e.getLocalizedMessage());
             return ResponseEB.builder().status(-1).message("Se podujo un error al crear inscripcion").build();
+        }
+    }
+
+    public ResponseEB getAllInscritosByEvento(int codigoEvento) {
+        List<InscritosEB> inscritos = inscritosEbRepository.getAllInscritosByEvento(codigoEvento);
+        if (inscritos != null && !inscritos.isEmpty()) {
+            return ResponseEB.builder().status(1).message("Inscritos recuperados").data(inscritos).build();
+        } else {
+            return ResponseEB.builder().status(-1).message("Se produjo un error al recuperar inscritos").build();
         }
     }
 }
