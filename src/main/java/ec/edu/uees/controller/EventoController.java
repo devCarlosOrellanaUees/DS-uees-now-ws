@@ -1,5 +1,6 @@
 package ec.edu.uees.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import ec.edu.uees.entities.EventoDTO;
 import ec.edu.uees.services.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,15 @@ public class EventoController {
     @GetMapping("/inscritos/all")
     public ResponseEntity<?> getAllEventosInscrito() {
         return ResponseEntity.ok(eventoService.getAllEventosInscritos());
+    }
+
+    @GetMapping("/mes")
+    public ResponseEntity<?> getEventosMes() throws JsonProcessingException {
+        return ResponseEntity.ok(eventoService.obtenerEventosPorMes(2025));
+    }
+
+    @GetMapping("/indicadores")
+    public ResponseEntity<?> indicadores() {
+        return ResponseEntity.ok(eventoService.indicadores());
     }
 }

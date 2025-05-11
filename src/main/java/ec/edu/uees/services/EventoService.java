@@ -1,5 +1,8 @@
 package ec.edu.uees.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ec.edu.uees.entities.EventoDTO;
 import ec.edu.uees.entities.mapper.EventoEB;
 import ec.edu.uees.entities.mapper.EventosInscritosEB;
@@ -12,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -78,4 +82,26 @@ public class EventoService {
             return ResponseEB.builder().status(-1).message("No tiene eventos inscritos").build();
         }
     }
+
+    public List<Integer> obtenerEventosPorMes(int anio) throws JsonProcessingException {
+        String jsonArray = eventoRepository.getEventosPorMes(anio);
+        // Convierte el JSON string a lista de enteros
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(jsonArray, new TypeReference<List<Integer>>() {
+        });
+    }
+
+    public ResponseEB indicadores() {
+        int eventos = eventoRepository.countEventos();
+        int personas = eventoRepository.countPersonas();
+        int opiniones = eventoRepository.countOpiniones();
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("eventos", eventos);
+        data.put("personas", personas);
+        data.put("opiniones", opiniones);
+        return ResponseEB.builder().status(1).data(data).build();
+    }
+
+
 }
